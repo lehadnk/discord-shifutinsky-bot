@@ -1,0 +1,23 @@
+{
+  "name": "shifutinsky",
+  "version": "1.0.0",
+  "description": "Shifutinsky bot for discord",
+  "main": "run.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "ts-node test/startup.ts && node_modules/.bin/mocha --opts ./mocha.opts",
+    "start": "node_modules/.bin/ts-node run.ts",
+    "compile": "node_modules/typescript/bin/tsc --listEmittedFiles"
+  },
+  "author": "lehadnk",
+  "license": "ISC",
+  "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.1.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  }
+}
