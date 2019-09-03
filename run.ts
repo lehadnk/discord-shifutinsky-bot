@@ -1,5 +1,5 @@
 import {config as dotenvInit} from 'dotenv';
-import {Client, TextChannel} from "discord.js";
+import {Client, TextChannel, VoiceChannel} from "discord.js";
 import {Blocker} from "./src/Blocker";
 import {Singer} from "./src/Singer";
 import {ThirdSeptember} from "./src/ThirdSeptember";
@@ -40,7 +40,13 @@ discordClient.on("message", async msg => {
     }
 
     blocker.block(msg.guild.id);
-    await singer.sing(thirdSeptemberText, channel);
+    if (msg.guild.id == '207912188407578624') {
+        let voiceChannel: VoiceChannel;
+        // @ts-ignore
+        voiceChannel = msg.guild.channels.find(c => c.id == '477156726257483786');
+        singer.singInVoiceChannel('third-sept', voiceChannel);
+    }
+    await singer.singInTextChannel(thirdSeptemberText, channel);
     blocker.unblock(msg.guild.id);
 });
 discordClient.login(process.env.DISCORD_BOT_TOKEN);
