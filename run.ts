@@ -3,12 +3,14 @@ import {Client, TextChannel, VoiceChannel} from "discord.js";
 import {Blocker} from "./src/Blocker";
 import {Singer} from "./src/Singer";
 import {ThirdSeptember} from "./src/ThirdSeptember";
+import {TwentyThirdSeptember} from "./src/TwentyThirdSeptember";
 
 dotenvInit();
 
 const blocker = new Blocker();
 const singer = new Singer();
 const thirdSeptemberText = ThirdSeptember.getText();
+const twentyThirdSeptemberText = TwentyThirdSeptember.getText();
 const permittedChannels = new Map<string, string>();
 permittedChannels.set('207912188407578624', '211650891336515585');
 permittedChannels.set('203632333620772874', '203632333620772874');
@@ -34,19 +36,16 @@ discordClient.on("message", async msg => {
         return;
     }
 
-    if (msg.content != '<@618408394247634946> Спойте, Михаил!') {
-        console.log(msg.content);
-        return;
-    }
+    // if (msg.content == '<@618408394247634946> Спойте, Михаил!') {
+    //     blocker.block(msg.guild.id);
+    //     await singer.singInTextChannel(thirdSeptemberText, channel);
+    //     blocker.unblock(msg.guild.id);
+    // }
 
-    blocker.block(msg.guild.id);
-    if (msg.guild.id == '207912188407578624') {
-        let voiceChannel: VoiceChannel;
-        // @ts-ignore
-        voiceChannel = msg.guild.channels.find(c => c.id == '477156726257483786');
-        singer.singInVoiceChannel('third-sept', voiceChannel);
+    if (msg.content == '<@618408394247634946> Маэстро, очень просим!') {
+        blocker.block(msg.guild.id);
+        await singer.singInTextChannel(thirdSeptemberText, channel);
+        blocker.unblock(msg.guild.id);
     }
-    await singer.singInTextChannel(thirdSeptemberText, channel);
-    blocker.unblock(msg.guild.id);
 });
 discordClient.login(process.env.DISCORD_BOT_TOKEN);
