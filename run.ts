@@ -44,7 +44,7 @@ discordClient.on("message", async msg => {
 
     if (msg.content == '<@618408394247634946> Маэстро, очень просим!') {
         blocker.block(msg.guild.id);
-        await singer.singInTextChannel(thirdSeptemberText, channel);
+        await singer.singInTextChannel(twentyThirdSeptemberText, channel);
         blocker.unblock(msg.guild.id);
     }
 });
