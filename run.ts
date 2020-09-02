@@ -58,10 +58,10 @@ discordClient.on("message", async msg => {
     channel = msg.channel;
 
     if (!permissionList.isPermitted(msg.channel.id)) {
-        console.log('not permitted');
+        console.log('Not permitted: ' + msg.channel.id);
         return;
     } else {
-        console.log('permitted');
+        console.log('Permitted' + msg.channel.id);
     }
 
     if (blocker.isBlocked(msg.guild.id)) {
