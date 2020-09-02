@@ -1,6 +1,6 @@
 {
   "name": "shifutinsky",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Shifutinsky bot for discord",
   "main": "run.ts",
   "directories": {
