@@ -46,7 +46,7 @@ discordClient.on("message", async msg => {
         let channelId = msgData.splice(0, 1).join();
 
         await permissionList.addPermission(channelId, msg.author.id, msg.author.username + '#' + msg.author.discriminator);
-        await msg.channel.send("Конечно, господа. Приглашайте - с удовольствием спою и у вас!");
+        await msg.channel.send("Конечно, господа. Приглашайте, - с удовольствием спою и у вас!");
     }
 
     if (msg.channel.type != 'text') {
