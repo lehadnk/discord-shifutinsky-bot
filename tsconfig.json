@@ -10,7 +10,8 @@
     "node_modules/@types"
   ],
   "files": [
-    "run.ts"
+    "run.ts",
+    "init-db.ts"
   ],
   "types": [
     "node",

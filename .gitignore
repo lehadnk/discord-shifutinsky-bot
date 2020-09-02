@@ -2,3 +2,4 @@
 .idea
 build
 node_modules
+db.db3

@@ -3,15 +3,20 @@ import {Client, TextChannel, VoiceChannel} from "discord.js";
 import {Blocker} from "./src/Blocker";
 import {Singer} from "./src/Singer";
 import {SongFactory} from "./src/Songs/SongFactory";
+import PermittedChannelList from "./src/PermittedChannelList";
+import {SqliteDbAdapter} from "./src/SqliteDbAdapter";
+import {Database} from "sqlite3";
 
 dotenvInit();
 
 const blocker = new Blocker();
 const singer = new Singer();
-const permittedChannels = new Map<string, string>();
-permittedChannels.set('207912188407578624', '211650891336515585');
-permittedChannels.set('203632333620772874', '203632333620772874');
-permittedChannels.set('296690626244902913', '296690626244902913');
+
+let databaseFile = './db.db3';
+let db = new Database(databaseFile);
+this.db = new SqliteDbAdapter(db);
+
+const permissionList = new PermittedChannelList(this.db);
 
 function containsRequest(msg: string): boolean {
     if (msg == '<@!618408394247634946> Спойте, Михаил!') {
@@ -31,6 +36,19 @@ function containsRequest(msg: string): boolean {
 
 let discordClient = new Client();
 discordClient.on("message", async msg => {
+    if (msg.channel.type === "dm" && msg.content.match(/^\/пригласить .*$/)) {
+        let msgData = msg.content.split(' ');
+        if (msgData.length < 2) {
+            return;
+        }
+
+        let command = msgData.splice(0, 1).join();
+        let channelId = msgData.splice(0, 1).join();
+
+        await permissionList.addPermission(channelId, msg.author.id, msg.author.username + '#' + msg.author.discriminator);
+        await msg.channel.send("Конечно, господа. Приглашайте - с удовольствием спою и у вас!");
+    }
+
     if (msg.channel.type != 'text') {
         return;
     }
@@ -39,10 +57,11 @@ discordClient.on("message", async msg => {
     // @ts-ignore
     channel = msg.channel;
 
-    if (permittedChannels.has(msg.guild.id)) {
-        if (permittedChannels.get(msg.guild.id) !== msg.channel.id) {
-            return;
-        }
+    if (!permissionList.isPermitted(msg.channel.id)) {
+        console.log('not permitted');
+        return;
+    } else {
+        console.log('permitted');
     }
 
     if (blocker.isBlocked(msg.guild.id)) {
@@ -61,4 +80,7 @@ discordClient.on("message", async msg => {
         blocker.unblock(msg.guild.id);
     }
 });
-discordClient.login(process.env.DISCORD_BOT_TOKEN);
+
+permissionList.loadPermissions().then(() => {
+    discordClient.login(process.env.DISCORD_BOT_TOKEN);
+});
