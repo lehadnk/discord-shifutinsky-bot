@@ -10,7 +10,8 @@
     "test": "ts-node test/startup.ts && node_modules/.bin/mocha --opts ./mocha.opts",
     "start": "node_modules/.bin/ts-node run.ts",
     "compile": "node_modules/typescript/bin/tsc --listEmittedFiles",
-    "init": "node_modules/.bin/ts-node init-db.ts"
+    "init": "node_modules/.bin/ts-node init-db.ts",
+    "list": "node_modules/.bin/ts-node list-guilds.ts"
   },
   "author": "lehadnk",
   "license": "ISC",
