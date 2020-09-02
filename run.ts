@@ -76,7 +76,10 @@ discordClient.on("message", async msg => {
         }
 
         blocker.block(msg.guild.id);
-        await singer.singInTextChannel(song.getText(), channel);
+        await singer.singInTextChannel(song.getText(), channel).catch((r) => {
+            console.error(r);
+            blocker.unblock(msg.guild.id);
+        });
         blocker.unblock(msg.guild.id);
     }
 });
