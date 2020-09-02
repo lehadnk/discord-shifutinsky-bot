@@ -30,9 +30,7 @@ export default class PermittedChannelList {
     {
         let data = await this.db.all("SELECT channel_id FROM permitted_channels");
         data.forEach((row) => {
-            console.log(row);
             this.permittedChannels.set(row.channel_id, row.channel_id);
-            console.log(row.channel_id);
         })
     }
 }
