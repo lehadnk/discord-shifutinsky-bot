@@ -11,18 +11,18 @@ const singer = new Singer();
 const permittedChannels = new Map<string, string>();
 permittedChannels.set('207912188407578624', '211650891336515585');
 permittedChannels.set('203632333620772874', '203632333620772874');
-permittedChannels.set('296690626244902913', '589233677066698763');
+permittedChannels.set('296690626244902913', '296690626244902913');
 
 function containsRequest(msg: string): boolean {
-    if (msg == '<@618408394247634946> Спойте, Михаил!') {
+    if (msg == '<@!618408394247634946> Спойте, Михаил!') {
         return true;
     }
 
-    if (msg == '<@618408394247634946> Маэстро, будьте добры!') {
+    if (msg == '<@!618408394247634946> Маэстро, будьте добры!') {
         return true;
     }
 
-    if (msg == '<@618408394247634946> Михаил, давайте нашу любимую!') {
+    if (msg == '<@!618408394247634946> Михаил, давайте нашу любимую!') {
         return true;
     }
 
