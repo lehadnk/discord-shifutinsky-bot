@@ -57,18 +57,18 @@ discordClient.on("message", async msg => {
     // @ts-ignore
     channel = msg.channel;
 
-    if (!permissionList.isPermitted(msg.channel.id)) {
-        console.log('Not permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
-        return;
-    } else {
-        console.log('Permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
-    }
-
     if (blocker.isBlocked(msg.guild.id)) {
         return;
     }
 
     if (containsRequest(msg.content)) {
+        if (!permissionList.isPermitted(msg.channel.id)) {
+            console.log('Not permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+            return;
+        } else {
+            console.log('Permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+        }
+
         let song = SongFactory.getTodaySong();
         if (song === null) {
             await singer.sayNo(channel);
