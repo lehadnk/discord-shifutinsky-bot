@@ -11,7 +11,8 @@
   ],
   "files": [
     "run.ts",
-    "init-db.ts"
+    "init-db.ts",
+    "list-guilds.ts"
   ],
   "types": [
     "node",
