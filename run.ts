@@ -52,6 +52,24 @@ discordClient.on("message", async msg => {
         return;
     }
 
+    if (msg.author.id === '207169330549358592' && msg.channel.type === "dm" && msg.content.match(/^\/базар .*$/)) {
+        let msgData = msg.content.split(' ');
+        if (msgData.length < 4) {
+            return;
+        }
+
+        let command = msgData.splice(0, 1).join();
+        let channelId = msgData.splice(0, 1).join();
+        let playerId = msgData.splice(0, 1).join();
+        let message = msgData.join(' ');
+
+        let cn: TextChannel;
+        // @ts-ignore
+        cn = discordClient.channels.get(channelId);
+        cn.send('<@' + playerId + '> ' + message).catch(r => console.log('Unable to send to channel: ' + r));
+        return;
+    }
+
     if (msg.channel.type === "dm" && msg.content.match(/^\/пригласить .*$/)) {
         let msgData = msg.content.split(' ');
         if (msgData.length < 2) {
@@ -74,7 +92,7 @@ discordClient.on("message", async msg => {
     channel = msg.channel;
 
     if (!containsRequest(msg.content)) {
-        console.log('Does not contain request - skipping: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + '): ' + msg.content);
+        console.log('Does not contain request - skipping: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ') - ' + msg.author.id + '(' + msg.author.username + '): ' + msg.content);
         return;
     }
 
