@@ -91,6 +91,13 @@ discordClient.on("message", async msg => {
     // @ts-ignore
     channel = msg.channel;
 
+    if (!permissionList.isPermitted(msg.channel.id)) {
+        console.log('Not permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+        return;
+    } else {
+        console.log('Permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+    }
+
     if (!containsRequest(msg.content)) {
         let prefix = msg.content.includes('618408394247634946') ? '!!!!!!!!!!!' : '';
         console.log(prefix + 'Does not contain request - skipping: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ') - ' + msg.author.id + '(' + msg.author.username + '): ' + msg.content);
@@ -100,13 +107,6 @@ discordClient.on("message", async msg => {
     if (blocker.isBlocked(msg.guild.id)) {
         console.log('Request is blocked: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
         return;
-    }
-
-    if (!permissionList.isPermitted(msg.channel.id)) {
-        console.log('Not permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
-        return;
-    } else {
-        console.log('Permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
     }
 
     let song = SongFactory.getTodaySong();
