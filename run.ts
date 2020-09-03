@@ -48,6 +48,10 @@ function containsRequest(msg: string): boolean {
 
 let discordClient = new Client();
 discordClient.on("message", async msg => {
+    if (msg.author.bot) {
+        return;
+    }
+
     if (msg.channel.type === "dm" && msg.content.match(/^\/пригласить .*$/)) {
         let msgData = msg.content.split(' ');
         if (msgData.length < 2) {
