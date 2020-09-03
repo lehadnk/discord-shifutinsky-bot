@@ -92,7 +92,8 @@ discordClient.on("message", async msg => {
     channel = msg.channel;
 
     if (!containsRequest(msg.content)) {
-        console.log('Does not contain request - skipping: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ') - ' + msg.author.id + '(' + msg.author.username + '): ' + msg.content);
+        let prefix = msg.content.includes('618408394247634946') ? '!!!!!!!!!!!' : '';
+        console.log(prefix + 'Does not contain request - skipping: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ') - ' + msg.author.id + '(' + msg.author.username + '): ' + msg.content);
         return;
     }
 
