@@ -57,31 +57,36 @@ discordClient.on("message", async msg => {
     // @ts-ignore
     channel = msg.channel;
 
-    if (blocker.isBlocked(msg.guild.id)) {
+    if (!containsRequest(msg.content)) {
+        console.log('Does not contain request - skipping: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + '): ' + msg.content);
         return;
     }
 
-    if (containsRequest(msg.content)) {
-        if (!permissionList.isPermitted(msg.channel.id)) {
-            console.log('Not permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
-            return;
-        } else {
-            console.log('Permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
-        }
-
-        let song = SongFactory.getTodaySong();
-        if (song === null) {
-            await singer.sayNo(channel);
-            return;
-        }
-
-        blocker.block(msg.guild.id);
-        await singer.singInTextChannel(song.getText(), channel).catch((r) => {
-            console.error(r);
-            blocker.unblock(msg.guild.id);
-        });
-        blocker.unblock(msg.guild.id);
+    if (blocker.isBlocked(msg.guild.id)) {
+        console.log('Request is blocked: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+        return;
     }
+
+    if (!permissionList.isPermitted(msg.channel.id)) {
+        console.log('Not permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+        return;
+    } else {
+        console.log('Permitted: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+    }
+
+    let song = SongFactory.getTodaySong();
+    if (song === null) {
+        console.log('Saying no: ' + channel.id + '(' + msg.guild.name + ' - ' + channel.name + ')');
+        await singer.sayNo(channel);
+        return;
+    }
+
+    blocker.block(msg.guild.id);
+    await singer.singInTextChannel(song.getText(), channel).catch((r) => {
+        console.error(r);
+        blocker.unblock(msg.guild.id);
+    });
+    blocker.unblock(msg.guild.id);
 });
 
 permissionList.loadPermissions().then(() => {

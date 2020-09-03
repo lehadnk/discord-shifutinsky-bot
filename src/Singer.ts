@@ -3,7 +3,9 @@ import {TextChannel, VoiceChannel} from "discord.js";
 export class Singer {
     public async singInTextChannel(text: Array<[string, number]>, channel: TextChannel) {
         await this.inhale(3500);
-        channel.send('Ладно-ладно, мои дорогие, только для вас, еще раз. Пойте вместо со мной.');
+        channel.send('Ладно-ладно, мои дорогие, только для вас, еще раз. Пойте вместо со мной.').catch(e => {
+            console.log('Cannot write in ' + channel.id + '(' + channel.name + '):' + e);
+        });
         await this.inhale(3000);
         for (let line of text) {
             channel.send(line[0]);
