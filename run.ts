@@ -39,6 +39,10 @@ function containsRequest(msg: string): boolean {
         return true;
     }
 
+    if (msg == '<@!618408394247634946> Михаил, ну без вас здесь никак') {
+        return true;
+    }
+
     if (msg == '<@618408394247634946> Маэстро, будьте добры!') {
         return true;
     }
