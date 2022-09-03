@@ -14,7 +14,9 @@ pm2 start run.js --name="discord-shifutinsky-bot"
 ```
 
 # How to ask for a song
-Tag bot with "Спойте, Михаил!" text:
+DM bot with `/пригласить <channel_id>` to add channel to a list of bot permitted channels.
+
+Tag bot with "Спойте, Михаил!" text in the desired channel:
 ```
 @Михаил Шуфутинский Спойте, Михаил!
 ```
