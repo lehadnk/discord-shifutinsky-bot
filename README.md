@@ -1,5 +1,5 @@
 # Invitation url
-https://discordapp.com/oauth2/authorize?&client_id=618408394247634946&scope=bot&permissions=2048
+https://discordapp.com/oauth2/authorize?&client_id=1015611373645987861&scope=bot&permissions=2048
 
 # How to compile
 ```
